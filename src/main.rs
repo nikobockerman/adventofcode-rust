@@ -34,7 +34,9 @@ struct SingleArgs {
 
 fn main() {
     let cli = Cli::parse();
-    simple_logger::init_with_level(cli.verbose.log_level().unwrap()).unwrap();
+    if let Some(level) = cli.verbose.log_level() {
+        simple_logger::init_with_level(level).unwrap();
+    }
 
     match &cli.command {
         Commands::All => {
