@@ -1,5 +1,5 @@
 [package]
-name = "adventofcode-rust"
+name = "aoc"
 edition = "2021"
 
 [dependencies]
