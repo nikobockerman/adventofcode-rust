@@ -20,21 +20,33 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
+        profile:
+          - dev
+          - release
+          - test
+        include:
+          - test: false
+          - run: true
+          - profile: test
+            test: true
+            run: false
 
-    name: ${{matrix.runner}} - Build + test + run
+    name: ${{matrix.runner}} - ${{matrix.profile}} - Build + test + run
     runs-on: ${{matrix.runner}}
     timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Build debug
-        run: cargo build --verbose
-      - name: Test
-        run: cargo test --verbose
-      - name: Build release
-        run: cargo build --release --verbose
-      - name: Run all debug
-        run: cargo run -- -vv all
-      - name: Run all release
-        run: cargo run --release -- -v all
+      - name: Fetch dependencies
+        run: cargo fetch --verbose --locked
+      - name: Build
+        run: cargo build --verbose --frozen --all-targets --profile ${{matrix.profile}}
+      - if: ${{ matrix.test }}
+        name: Test
+        run: cargo test --verbose --frozen --all-targets --profile ${{matrix.profile}}
+      - name: Check
+        run: cargo check --verbose --frozen --all-targets --profile ${{matrix.profile}}
+      - if: ${{ matrix.run }}
+        name: Run subcommand all
+        run: cargo run --verbose --frozen --profile ${{matrix.profile}} -- -vv all
