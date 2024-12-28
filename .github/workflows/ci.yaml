@@ -16,3 +16,5 @@ jobs:
     uses: ./.github/workflows/build-test-run.yaml
   check-renovate-config:
     uses: ./.github/workflows/check-renovate-config.yaml
+  check-rustfmt:
+    uses: ./.github/workflows/check-rustfmt.yaml
