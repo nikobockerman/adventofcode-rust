@@ -1,3 +1,4 @@
+use anyhow::Result;
 use clap::{Args, Parser, Subcommand};
 use clap_verbosity_flag::Verbosity;
 
@@ -32,10 +33,10 @@ struct SingleArgs {
     part: u8,
 }
 
-fn main() {
+fn main() -> Result<()> {
     let cli = Cli::parse();
     if let Some(level) = cli.verbose.log_level() {
-        simple_logger::init_with_level(level).unwrap();
+        simple_logger::init_with_level(level)?;
     }
 
     match &cli.command {
@@ -58,4 +59,5 @@ fn main() {
     info!("INFO");
     warn!("WARN");
     error!("ERROR");
+    Ok(())
 }
