@@ -1,0 +1,40 @@
+name: Build, test and run
+on:
+  pull_request:
+    paths:
+      - "**.rs"
+      - ".github/workflows/build-test-run.yaml"
+      - "Cargo.lock"
+      - "Cargo.toml"
+  workflow_call:
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-test-run:
+    strategy:
+      matrix:
+        runner:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+
+    name: ${{matrix.runner}} - Build + test + run
+    runs-on: ${{matrix.runner}}
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Build debug
+        run: cargo build --verbose
+      - name: Test
+        run: cargo test --verbose
+      - name: Build release
+        run: cargo build --release --verbose
+      - name: Run all debug
+        run: cargo run -- -vv all
+      - name: Run all release
+        run: cargo run --release -- -v all

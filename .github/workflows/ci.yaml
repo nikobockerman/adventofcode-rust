@@ -12,5 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-test-run:
+    uses: ./.github/workflows/build-test-run.yaml
   check-renovate-config:
     uses: ./.github/workflows/check-renovate-config.yaml
