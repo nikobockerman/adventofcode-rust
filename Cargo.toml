@@ -3,7 +3,7 @@ name = "aoc"
 edition = "2021"
 
 [dependencies]
-clap = { version = "4.5.23", features = ["derive"] }
-clap-verbosity-flag = "3.0.2"
-log = { version = "0.4.22", features = ["release_max_level_warn"] }
-simple_logger = "5.0.0"
+clap = { version = "=4.5.23", features = ["derive"] }
+clap-verbosity-flag = "=3.0.2"
+log = { version = "=0.4.22", features = ["release_max_level_warn"] }
+simple_logger = "=5.0.0"
