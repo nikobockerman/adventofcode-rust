@@ -25,11 +25,14 @@ jobs:
           - release
           - test
         include:
-          - test: false
+          - clippy: false
           - run: true
+          - test: false
+          - profile: dev
+            clippy: true
           - profile: test
-            test: true
             run: false
+            test: true
 
     name: ${{matrix.runner}} - ${{matrix.profile}} - Build + test + run
     runs-on: ${{matrix.runner}}
@@ -47,6 +50,17 @@ jobs:
         run: cargo test --verbose --frozen --all-targets --profile ${{matrix.profile}}
       - name: Check
         run: cargo check --verbose --frozen --all-targets --profile ${{matrix.profile}}
+      - if: ${{ matrix.clippy }}
+        name: Clippy
+        run: >
+          cargo clippy --verbose --frozen --all-targets --profile ${{matrix.profile}} --
+          -D warnings
+          -D clippy::complexity
+          -D clippy::correctness
+          -D clippy::pedantic
+          -D clippy::perf
+          -D clippy::style
+          -D clippy::suspicious
       - if: ${{ matrix.run }}
         name: Run subcommand all
         run: cargo run --verbose --frozen --profile ${{matrix.profile}} -- -vv all
