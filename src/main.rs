@@ -11,7 +11,7 @@ struct Cli {
     verbose: Verbosity,
 
     #[command(subcommand)]
-    command: Commands
+    command: Commands,
 }
 
 #[derive(Subcommand)]
@@ -39,13 +39,16 @@ fn main() {
     match &cli.command {
         Commands::All => {
             println!("TODO: Run all solutions");
-        },
+        }
         Commands::Day(day_args) => {
             println!("TODO: Run day {}", day_args.day);
-        },
+        }
         Commands::Single(single_args) => {
-            println!("TODO: Run single: day {} part {}", single_args.day, single_args.part);
-        },
+            println!(
+                "TODO: Run single: day {} part {}",
+                single_args.day, single_args.part
+            );
+        }
     }
 
     trace!("TRACE");
