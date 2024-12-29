@@ -7,9 +7,7 @@
     clippy::suspicious
 )]
 
-use anyhow::Result;
+pub mod cli;
 
-fn main() -> Result<()> {
-    aoc::cli::cli()?;
-    Ok(())
-}
+#[macro_use]
+extern crate log;

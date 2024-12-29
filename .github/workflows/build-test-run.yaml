@@ -52,15 +52,7 @@ jobs:
         run: cargo check --verbose --frozen --all-targets --profile ${{matrix.profile}}
       - if: ${{ matrix.clippy }}
         name: Clippy
-        run: >
-          cargo clippy --verbose --frozen --all-targets --profile ${{matrix.profile}} --
-          -D warnings
-          -D clippy::complexity
-          -D clippy::correctness
-          -D clippy::pedantic
-          -D clippy::perf
-          -D clippy::style
-          -D clippy::suspicious
+        run: cargo clippy --verbose --frozen --all-targets --profile ${{matrix.profile}} -- -D warnings
       - if: ${{ matrix.run }}
         name: Run subcommand all
         run: cargo run --verbose --frozen --profile ${{matrix.profile}} -- -vv all
