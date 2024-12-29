@@ -30,6 +30,7 @@ struct SingleArgs {
     part: u8,
 }
 
+#[allow(clippy::missing_errors_doc)]
 pub fn cli() -> Result<()> {
     let cli = Cli::parse();
     if let Some(level) = cli.verbose.log_level() {
