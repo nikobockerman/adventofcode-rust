@@ -7,9 +7,10 @@
     clippy::suspicious
 )]
 
+use std::process::ExitCode;
+
 use anyhow::Result;
 
-fn main() -> Result<()> {
-    aoc::cli::cli()?;
-    Ok(())
+fn main() -> Result<ExitCode> {
+    aoc::cli::cli()
 }
