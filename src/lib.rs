@@ -8,13 +8,14 @@
 )]
 
 pub mod cli;
-pub mod y2024;
 
 mod answer;
 mod data;
 mod inputs;
 mod problem;
 mod solver;
+
+mod y2024;
 
 type SolverFunc = fn(&'static str) -> crate::answer::Answer;
 
