@@ -5,37 +5,67 @@ use anyhow::Result;
 #[allow(clippy::missing_panics_doc)]
 pub fn p1(input: &'static str) -> Result<u16> {
     let parts = load_parts(input);
-    let page_ordering_rules = parts.0;
-    let update_page_numbers = parts.1;
-    let dependencies = construct_dependencies_map(page_ordering_rules);
+    let dependencies = construct_dependencies_map(parts.0);
 
-    let filter_invalid_update_lines = |pages: &Vec<u8>| {
-        let mut pages_before: HashSet<u8> = HashSet::new();
-        pages.iter().all(|page| {
-            if let Some(deps) = dependencies.get(page) {
-                if !pages_before.is_disjoint(deps) {
-                    return false;
-                }
-            }
-            pages_before.insert(*page);
-            true
-        })
-    };
-
-    let transform_middle_value = |pages: Vec<u8>| {
-        let size = pages.len();
-        assert!(size % 2 == 1, "Expected odd number of pages");
-        *pages.get(size / 2).unwrap()
-    };
-
-    let result = update_page_numbers
-        .into_iter()
-        .filter(filter_invalid_update_lines)
-        .map(transform_middle_value)
+    let result = parts
+        .1
+        .filter(|pages| contains_correctly_ordered_update_pages(&dependencies, pages))
+        .map(|pages| get_middle_value(&pages))
         .map(u16::from)
         .sum();
 
     Ok(result)
+}
+
+pub fn p2(input: &'static str) -> Result<u16> {
+    let parts = load_parts(input);
+    let dependencies = construct_dependencies_map(parts.0);
+
+    let result = parts
+        .1
+        .filter(|pages| !contains_correctly_ordered_update_pages(&dependencies, pages))
+        .map(|mut pages| {
+            pages.sort_by(|a, b| {
+                if let Some(a_deps) = dependencies.get(a) {
+                    if a_deps.contains(b) {
+                        return std::cmp::Ordering::Less;
+                    }
+                }
+                if let Some(b_deps) = dependencies.get(b) {
+                    if b_deps.contains(a) {
+                        return std::cmp::Ordering::Greater;
+                    }
+                }
+                std::cmp::Ordering::Equal
+            });
+            pages
+        })
+        .map(|pages| get_middle_value(&pages))
+        .map(u16::from)
+        .sum();
+    Ok(result)
+}
+
+fn get_middle_value(pages: &[u8]) -> u8 {
+    let size = pages.len();
+    assert!(size % 2 == 1, "Expected odd number of pages");
+    *pages.get(size / 2).unwrap()
+}
+
+fn contains_correctly_ordered_update_pages(
+    dependencies: &HashMap<u8, HashSet<u8>>,
+    pages: &[u8],
+) -> bool {
+    let mut pages_before: HashSet<u8> = HashSet::new();
+    pages.iter().all(|page| {
+        if let Some(deps) = dependencies.get(page) {
+            if !pages_before.is_disjoint(deps) {
+                return false;
+            }
+        }
+        pages_before.insert(*page);
+        true
+    })
 }
 
 fn construct_dependencies_map<I>(page_ordering_rules: I) -> HashMap<u8, HashSet<u8>>
@@ -124,5 +154,11 @@ mod tests {
     fn test_p1() {
         let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
         assert_eq!(p1(input).unwrap(), 143);
+    }
+
+    #[test]
+    fn test_p2() {
+        let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
+        assert_eq!(p2(input).unwrap(), 123);
     }
 }

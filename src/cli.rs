@@ -96,35 +96,45 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
             day: 5,
             part: Part::P1,
         } => Some(4_872u16),
+        Id {
+            year: 2024,
+            day: 5,
+            part: Part::P2,
+        } => Some(5_564u16),
         _ => None,
     };
 
-    let result = match id {
+    let answer = match id {
         Id {
             year: 2024,
             day: 5,
             part: Part::P1,
         } => crate::y2024::d5::p1(input)?,
+        Id {
+            year: 2024,
+            day: 5,
+            part: Part::P2,
+        } => crate::y2024::d5::p2(input)? as u16,
         _ => anyhow::bail!("Solver not found for {id}"),
     };
 
     let (is_correct, is_incorrect) = match correct_answer {
         None => (false, false),
-        Some(answer) => (result == answer, result != answer),
+        Some(value) => (answer == value, answer != value),
     };
 
     if is_incorrect {
         eprintln!(
             "Incorrect answer: {}. Correct is {}",
-            result,
+            answer,
             correct_answer.unwrap()
         );
         return Ok(ExitCode::from(2));
     }
     if is_correct {
-        println!("Answer is still correct: {result}");
+        println!("Answer is still correct: {answer}");
     } else {
-        println!("{result}");
+        println!("{answer}");
     }
     Ok(ExitCode::SUCCESS)
 }
