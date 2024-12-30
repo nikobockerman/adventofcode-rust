@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 #[derive(PartialEq, Eq, Hash, Clone, Copy, Debug)]
 pub enum Part {
     P1 = 1,
@@ -13,13 +11,13 @@ pub struct Id {
     pub part: Part,
 }
 
-impl Display for Part {
+impl std::fmt::Display for Part {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", *self as u8)
     }
 }
 
-impl Display for Id {
+impl std::fmt::Display for Id {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}-{} p{}", self.year, self.day, self.part)
     }

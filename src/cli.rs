@@ -4,11 +4,6 @@ use anyhow::Result;
 use clap::{Args, Parser, Subcommand};
 use clap_verbosity_flag::Verbosity;
 
-use crate::{
-    inputs::get_input,
-    problem::{Id, Part},
-};
-
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Cli {
@@ -76,65 +71,34 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
         part: part_arg,
     } = args;
     let year = year_arg;
-    let id = Id {
+    let id = crate::problem::Id {
         year,
         day,
         part: match part_arg {
-            1 => Part::P1,
-            2 => Part::P2,
+            1 => crate::problem::Part::P1,
+            2 => crate::problem::Part::P2,
             _ => unreachable!(),
         },
     };
     debug!("Problem: {}", id);
 
-    let input = get_input(year, day).ok_or_else(|| anyhow::anyhow!("Input not found for {id}"))?;
+    let input = crate::solver::Input::new(id)?;
+    let output = input.solve()?;
+    let analysis = output.analyze();
 
-    #[allow(clippy::match_single_binding)]
-    let correct_answer = match id {
-        Id {
-            year: 2024,
-            day: 5,
-            part: Part::P1,
-        } => Some(4_872u16),
-        Id {
-            year: 2024,
-            day: 5,
-            part: Part::P2,
-        } => Some(5_564u16),
-        _ => None,
-    };
-
-    let answer = match id {
-        Id {
-            year: 2024,
-            day: 5,
-            part: Part::P1,
-        } => crate::y2024::d5::p1(input)?,
-        Id {
-            year: 2024,
-            day: 5,
-            part: Part::P2,
-        } => crate::y2024::d5::p2(input)? as u16,
-        _ => anyhow::bail!("Solver not found for {id}"),
-    };
-
-    let (is_correct, is_incorrect) = match correct_answer {
-        None => (false, false),
-        Some(value) => (answer == value, answer != value),
-    };
-
-    if is_incorrect {
+    if analysis.is_incorrect() {
+        assert!(analysis.correct_answer.is_some());
         eprintln!(
-            "Incorrect answer: {}. Correct is {}",
-            answer,
-            correct_answer.unwrap()
+            "FAIL: Incorrect answer: {}. Correct is {}",
+            analysis.answer,
+            analysis.correct_answer.unwrap()
         );
         return Ok(ExitCode::from(2));
     }
-    if is_correct {
-        println!("Answer is still correct: {answer}");
+    if analysis.is_correct() {
+        println!("Answer is still correct: {}", analysis.answer);
     } else {
-        println!("{answer}");
+        println!("{}", analysis.answer);
     }
     Ok(ExitCode::SUCCESS)
 }

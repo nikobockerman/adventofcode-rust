@@ -1,27 +1,28 @@
 use std::collections::{HashMap, HashSet};
 
+use crate::answer::Answer;
 use anyhow::Result;
 
 #[allow(clippy::missing_panics_doc)]
-pub fn p1(input: &'static str) -> Result<u16> {
+pub fn p1(input: &'static str) -> Result<Answer> {
     let parts = load_parts(input);
     let dependencies = construct_dependencies_map(parts.0);
 
-    let result = parts
+    let result: u16 = parts
         .1
         .filter(|pages| contains_correctly_ordered_update_pages(&dependencies, pages))
         .map(|pages| get_middle_value(&pages))
         .map(u16::from)
         .sum();
 
-    Ok(result)
+    Ok(result.into())
 }
 
-pub fn p2(input: &'static str) -> Result<u16> {
+pub fn p2(input: &'static str) -> Result<Answer> {
     let parts = load_parts(input);
     let dependencies = construct_dependencies_map(parts.0);
 
-    let result = parts
+    let result: u16 = parts
         .1
         .filter(|pages| !contains_correctly_ordered_update_pages(&dependencies, pages))
         .map(|mut pages| {
@@ -43,7 +44,7 @@ pub fn p2(input: &'static str) -> Result<u16> {
         .map(|pages| get_middle_value(&pages))
         .map(u16::from)
         .sum();
-    Ok(result)
+    Ok(result.into())
 }
 
 fn get_middle_value(pages: &[u8]) -> u8 {
@@ -153,12 +154,12 @@ mod tests {
     #[test]
     fn test_p1() {
         let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
-        assert_eq!(p1(input).unwrap(), 143);
+        assert_eq!(p1(input).unwrap(), 143u16);
     }
 
     #[test]
     fn test_p2() {
         let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
-        assert_eq!(p2(input).unwrap(), 123);
+        assert_eq!(p2(input).unwrap(), 123u16);
     }
 }
