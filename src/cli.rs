@@ -3,6 +3,7 @@ use std::process::ExitCode;
 use anyhow::Result;
 use clap::{Args, Parser, Subcommand};
 use clap_verbosity_flag::Verbosity;
+use log::debug;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]

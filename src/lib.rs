@@ -18,6 +18,3 @@ mod solver;
 mod y2024;
 
 type SolverFunc = fn(&'static str) -> crate::answer::Answer;
-
-#[macro_use]
-extern crate log;
