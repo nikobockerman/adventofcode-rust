@@ -11,3 +11,10 @@ lazy_static::lazy_static! {
 pub(crate) fn get_input(year: u16, day: u8) -> Option<&'static str> {
     INPUTS.get(&(year, day)).copied().map(str::trim_end)
 }
+
+#[cfg(test)]
+pub(crate) mod tests {
+    pub(crate) fn prepare_example_input(example_input: &'static str) -> &'static str {
+        &example_input[1..]
+    }
+}

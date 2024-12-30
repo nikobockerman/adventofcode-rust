@@ -91,6 +91,11 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
 
     #[allow(clippy::match_single_binding)]
     let correct_answer = match id {
+        Id {
+            year: 2024,
+            day: 5,
+            part: Part::P1,
+        } => Some(4_872u16),
         _ => None,
     };
 
