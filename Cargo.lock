@@ -64,6 +64,7 @@ dependencies = [
  "anyhow",
  "clap",
  "clap-verbosity-flag",
+ "lazy_static",
  "log",
  "simple_logger",
 ]
