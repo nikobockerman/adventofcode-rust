@@ -55,4 +55,6 @@ jobs:
         run: cargo clippy --verbose --frozen --all-targets --profile ${{matrix.profile}} -- -D warnings
       - if: ${{ matrix.run }}
         name: Run subcommand all
-        run: cargo run --verbose --frozen --profile ${{matrix.profile}} -- -vv all
+        env:
+          RUST_BACKTRACE: 1
+        run: cargo run --verbose --frozen --profile ${{matrix.profile}} -- -vvvv all
