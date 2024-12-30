@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 
 use crate::problem::Id;
 use crate::SolverFunc;
@@ -25,8 +25,8 @@ lazy_static::lazy_static! {
 }
 
 lazy_static::lazy_static! {
-    static ref SOLVERS: HashMap<(u16, u8, u8), SolverFunc> = {
-        let mut solvers = HashMap::new();
+    static ref SOLVERS: BTreeMap<(u16, u8, u8), SolverFunc> = {
+        let mut solvers = BTreeMap::new();
 
         solvers.insert((2024, 5, 1), crate::y2024::d5::p1 as SolverFunc);
         solvers.insert((2024, 5, 2), crate::y2024::d5::p2 as SolverFunc);
@@ -54,4 +54,23 @@ pub(crate) fn get_correct_answer(id: Id) -> Option<crate::answer::Answer> {
     CORRECT_ANSWERS
         .get(&(id.year, id.day, id.part as u8))
         .copied()
+}
+
+pub(crate) fn get_all_known_solver_ids() -> impl Iterator<Item = Id> {
+    SOLVERS.keys().map(|&(year, day, part)| Id {
+        year,
+        day,
+        part: part.try_into().unwrap(),
+    })
+}
+
+pub(crate) fn get_known_solver_ids_for_day(year: u16, day: u8) -> impl Iterator<Item = Id> {
+    SOLVERS
+        .keys()
+        .filter(move |(y, d, _)| *y == year && *d == day)
+        .map(|&(year, day, part)| Id {
+            year,
+            day,
+            part: part.try_into().unwrap(),
+        })
 }

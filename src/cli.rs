@@ -21,7 +21,7 @@ enum Commands {
     Single(SingleArgs),
 }
 
-#[derive(Args)]
+#[derive(Args, Clone, Copy)]
 struct DayArgs {
     #[arg(long, short, default_value_t = 2024)]
     year: u16,
@@ -45,23 +45,61 @@ pub fn cli() -> Result<ExitCode> {
     }
 
     match &cli.command {
-        Commands::All => {
-            println!("TODO: Run all solutions");
+        Commands::All => all(),
+        Commands::Day(day_args) => day(*day_args),
+        Commands::Single(single_args) => single(*single_args),
+    }
+}
+
+fn all() -> Result<ExitCode> {
+    multiple(crate::data::get_all_known_solver_ids())
+}
+
+fn day(args: DayArgs) -> Result<ExitCode> {
+    let DayArgs { year, day } = args;
+    multiple(crate::data::get_known_solver_ids_for_day(year, day))
+}
+
+fn multiple<I>(ids: I) -> Result<ExitCode>
+where
+    I: Iterator<Item = crate::problem::Id>,
+{
+    let mut all_passed = None;
+    for id in ids {
+        let input = crate::solver::Input::new(id).unwrap();
+        let output = input.solve()?;
+        let analysis = output.analyze();
+
+        let passed = !analysis.is_incorrect();
+        *all_passed.get_or_insert(true) &= passed;
+
+        let mut msg = format!("{id}: ");
+        if analysis.is_incorrect() {
+            msg += &format!(
+                "FAIL: Incorrect answer: {}. Correct is: {}",
+                analysis.answer,
+                analysis.correct_answer.unwrap()
+            );
+        } else {
+            msg += "PASS";
         }
-        Commands::Day(day_args) => {
-            println!("TODO: Run day {}", day_args.day);
-        }
-        Commands::Single(single_args) => {
-            single(*single_args)?;
-        }
+        println!("{msg}");
     }
 
-    trace!("TRACE");
-    debug!("DEBUG");
-    info!("INFO");
-    warn!("WARN");
-    error!("ERROR");
-    Ok(ExitCode::SUCCESS)
+    Ok(match all_passed {
+        None => {
+            println!("No answers known");
+            ExitCode::SUCCESS
+        }
+        Some(true) => {
+            println!("Finished with all passing");
+            ExitCode::SUCCESS
+        }
+        Some(false) => {
+            println!("Finished with failures");
+            ExitCode::FAILURE
+        }
+    })
 }
 
 fn single(args: SingleArgs) -> Result<ExitCode> {
