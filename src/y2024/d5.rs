@@ -1,10 +1,9 @@
 use std::collections::{HashMap, HashSet};
 
 use crate::answer::Answer;
-use anyhow::Result;
 
 #[allow(clippy::missing_panics_doc)]
-pub fn p1(input: &'static str) -> Result<Answer> {
+pub fn p1(input: &'static str) -> Answer {
     let parts = load_parts(input);
     let dependencies = construct_dependencies_map(parts.0);
 
@@ -15,10 +14,10 @@ pub fn p1(input: &'static str) -> Result<Answer> {
         .map(u16::from)
         .sum();
 
-    Ok(result.into())
+    result.into()
 }
 
-pub fn p2(input: &'static str) -> Result<Answer> {
+pub fn p2(input: &'static str) -> Answer {
     let parts = load_parts(input);
     let dependencies = construct_dependencies_map(parts.0);
 
@@ -44,7 +43,7 @@ pub fn p2(input: &'static str) -> Result<Answer> {
         .map(|pages| get_middle_value(&pages))
         .map(u16::from)
         .sum();
-    Ok(result.into())
+    result.into()
 }
 
 fn get_middle_value(pages: &[u8]) -> u8 {
@@ -154,12 +153,12 @@ mod tests {
     #[test]
     fn test_p1() {
         let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
-        assert_eq!(p1(input).unwrap(), 143u16);
+        assert_eq!(p1(input), 143u16);
     }
 
     #[test]
     fn test_p2() {
         let input = crate::inputs::tests::prepare_example_input(EXAMPLE_INPUT);
-        assert_eq!(p2(input).unwrap(), 123u16);
+        assert_eq!(p2(input), 123u16);
     }
 }

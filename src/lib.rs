@@ -16,7 +16,7 @@ mod inputs;
 mod problem;
 mod solver;
 
-type SolverFunc = fn(&'static str) -> anyhow::Result<crate::answer::Answer>;
+type SolverFunc = fn(&'static str) -> crate::answer::Answer;
 
 #[macro_use]
 extern crate log;

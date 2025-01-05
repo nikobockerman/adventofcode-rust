@@ -67,7 +67,7 @@ where
     let mut all_passed = None;
     for id in ids {
         let input = crate::solver::Input::new(id)?;
-        let output = input.solve()?;
+        let output = input.solve();
         let analysis = output.analyze();
 
         let passed = !analysis.is_incorrect();
@@ -121,7 +121,7 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
     debug!("Problem: {}", id);
 
     let input = crate::solver::Input::new(id)?;
-    let output = input.solve()?;
+    let output = input.solve();
     let analysis = output.analyze();
 
     if analysis.is_incorrect() {
