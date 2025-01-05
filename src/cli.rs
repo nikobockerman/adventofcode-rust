@@ -66,7 +66,7 @@ where
 {
     let mut all_passed = None;
     for id in ids {
-        let input = crate::solver::Input::new(id).unwrap();
+        let input = crate::solver::Input::new(id)?;
         let output = input.solve()?;
         let analysis = output.analyze();
 
