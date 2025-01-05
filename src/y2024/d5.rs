@@ -1,6 +1,6 @@
-use std::collections::{HashMap, HashSet};
-
 use crate::answer::Answer;
+use itertools::Itertools;
+use std::collections::{HashMap, HashSet};
 
 #[allow(clippy::missing_panics_doc)]
 pub fn p1(input: &'static str) -> Answer {
@@ -72,11 +72,16 @@ fn construct_dependencies_map<I>(page_ordering_rules: I) -> HashMap<u8, HashSet<
 where
     I: Iterator<Item = (u8, u8)>,
 {
-    let mut dependencies: HashMap<u8, HashSet<u8>> = HashMap::new();
-    for rule in page_ordering_rules {
-        dependencies.entry(rule.0).or_default().insert(rule.1);
-    }
-    dependencies
+    page_ordering_rules
+        .chunk_by(|(dependee, _)| *dependee)
+        .into_iter()
+        .map(|(dependee, dependency_rules)| {
+            (dependee, dependency_rules.map(|(_, dependency)| dependency))
+        })
+        .fold(HashMap::new(), |mut map, (dependee, dependents)| {
+            map.entry(dependee).or_default().extend(dependents);
+            map
+        })
 }
 
 fn load_parts(
