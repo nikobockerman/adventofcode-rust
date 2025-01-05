@@ -17,12 +17,12 @@ impl Input {
         Ok(Self { id, solver, str })
     }
 
-    pub fn solve(&self) -> anyhow::Result<Output> {
-        let answer = (self.solver)(self.str)?;
-        Ok(Output {
+    pub fn solve(&self) -> Output {
+        let answer = (self.solver)(self.str);
+        Output {
             id: self.id,
             answer,
-        })
+        }
     }
 }
 

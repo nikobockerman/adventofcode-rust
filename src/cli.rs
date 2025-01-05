@@ -3,6 +3,7 @@ use std::process::ExitCode;
 use anyhow::Result;
 use clap::{Args, Parser, Subcommand};
 use clap_verbosity_flag::Verbosity;
+use log::debug;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -66,8 +67,8 @@ where
 {
     let mut all_passed = None;
     for id in ids {
-        let input = crate::solver::Input::new(id).unwrap();
-        let output = input.solve()?;
+        let input = crate::solver::Input::new(id)?;
+        let output = input.solve();
         let analysis = output.analyze();
 
         let passed = !analysis.is_incorrect();
@@ -121,7 +122,7 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
     debug!("Problem: {}", id);
 
     let input = crate::solver::Input::new(id)?;
-    let output = input.solve()?;
+    let output = input.solve();
     let analysis = output.analyze();
 
     if analysis.is_incorrect() {
