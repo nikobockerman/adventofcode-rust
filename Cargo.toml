@@ -3,7 +3,7 @@ name = "aoc"
 edition = "2021"
 
 [dependencies]
-anyhow = "=1.0.96"
+anyhow = "=1.0.97"
 clap = { version = "=4.5.31", features = ["derive"] }
 clap-verbosity-flag = "=3.0.2"
 itertools = "=0.14.0"
