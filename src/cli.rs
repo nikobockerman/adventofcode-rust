@@ -119,7 +119,7 @@ fn single(args: SingleArgs) -> Result<ExitCode> {
             _ => unreachable!(),
         },
     };
-    debug!("Problem: {}", id);
+    debug!("Problem: {id}");
 
     let input = crate::solver::Input::new(id)?;
     let output = input.solve();
