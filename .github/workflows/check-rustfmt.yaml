@@ -4,6 +4,7 @@ on:
     paths:
       - "**.rs"
       - ".github/workflows/check-rustfmt.yaml"
+      - "Cargo.toml"
   workflow_call:
   workflow_dispatch:
 
