@@ -1,7 +1,7 @@
+use crate::SolverFunc;
 use crate::answer::Answer;
 use crate::data;
 use crate::problem::Id;
-use crate::SolverFunc;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Input {

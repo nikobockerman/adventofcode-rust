@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, HashMap};
 
-use crate::problem::Id;
 use crate::SolverFunc;
+use crate::problem::Id;
 
 lazy_static::lazy_static! {
     static ref INPUTS: HashMap<(u16, u8), &'static str> = {
