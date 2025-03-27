@@ -4,7 +4,7 @@ edition = "2024"
 
 [dependencies]
 anyhow = "=1.0.97"
-clap = { version = "=4.5.32", features = ["derive"] }
+clap = { version = "=4.5.34", features = ["derive"] }
 clap-verbosity-flag = "=3.0.2"
 itertools = "=0.14.0"
 lazy_static = "=1.5.0"
