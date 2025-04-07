@@ -1,3 +1,7 @@
 {
-  "recommendations": ["arcanis.vscode-zipfs", "rust-lang.rust-analyzer"]
+  "recommendations": [
+    "arcanis.vscode-zipfs",
+    "rust-lang.rust-analyzer",
+    "esbenp.prettier-vscode"
+  ]
 }
