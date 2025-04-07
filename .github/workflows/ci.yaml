@@ -18,3 +18,5 @@ jobs:
     uses: ./.github/workflows/check-renovate-config.yaml
   check-rustfmt:
     uses: ./.github/workflows/check-rustfmt.yaml
+  check-yarn:
+    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@d32b3b6765f463389cf43ee69b0bb1a6a8fe80f6
