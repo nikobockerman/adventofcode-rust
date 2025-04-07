@@ -1,4 +1,8 @@
 {
+  "devDependencies": {
+    "@action-validator/cli": "0.6.0",
+    "@action-validator/core": "0.6.0"
+  },
   "engines": {
     "node": "^22.0.0"
   },
