@@ -6,6 +6,7 @@ on:
       - ".github/workflows/build-test-run.yaml"
       - "Cargo.lock"
       - "Cargo.toml"
+      - "rust-toolchain.toml"
   workflow_call:
   workflow_dispatch:
 
