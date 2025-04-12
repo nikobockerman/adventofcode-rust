@@ -5,6 +5,7 @@ on:
       - "**.rs"
       - ".github/workflows/check-rustfmt.yaml"
       - "Cargo.toml"
+      - "rust-toolchain.toml"
   workflow_call:
   workflow_dispatch:
 
