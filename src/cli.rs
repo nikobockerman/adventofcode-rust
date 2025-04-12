@@ -1,3 +1,4 @@
+use std::fmt::Write as _;
 use std::process::ExitCode;
 
 use anyhow::Result;
@@ -76,7 +77,8 @@ where
 
         let mut msg = format!("{id}: ");
         if analysis.is_incorrect() {
-            msg += &format!(
+            let _ = write!(
+                msg,
                 "FAIL: Incorrect answer: {}. Correct is: {}",
                 analysis.answer,
                 analysis.correct_answer.unwrap()
