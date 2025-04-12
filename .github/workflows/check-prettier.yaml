@@ -1,10 +1,11 @@
 name: Check - prettier
-
 on:
   pull_request:
     paths-ignore:
       - "**.rs"
   workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
   wf:

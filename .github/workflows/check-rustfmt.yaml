@@ -8,6 +8,8 @@ on:
       - "rust-toolchain.toml"
   workflow_call:
   workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
   check-rustfmt:
