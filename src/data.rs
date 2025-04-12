@@ -1,39 +1,26 @@
 use std::collections::{BTreeMap, HashMap};
+use std::sync::LazyLock;
 
 use crate::SolverFunc;
 use crate::problem::Id;
 
-lazy_static::lazy_static! {
-    static ref INPUTS: HashMap<(u16, u8), &'static str> = {
-        let mut map = HashMap::new();
+static INPUTS: LazyLock<HashMap<(u16, u8), &'static str>> =
+    LazyLock::new(|| HashMap::from([((2024, 5), include_str!("y2024/input-d5.txt"))]));
 
-        map.insert((2024, 5), include_str!("y2024/input-d5.txt"));
+static CORRECT_ANSWERS: LazyLock<HashMap<(u16, u8, u8), crate::answer::Answer>> =
+    LazyLock::new(|| {
+        HashMap::from([
+            ((2024, 5, 1), 4_872u16.into()),
+            ((2024, 5, 2), 5_564u16.into()),
+        ])
+    });
 
-        map
-    };
-}
-
-lazy_static::lazy_static! {
-    static ref CORRECT_ANSWERS: HashMap<(u16,u8, u8), crate::answer::Answer> = {
-        let mut answers = HashMap::new();
-
-        answers.insert((2024, 5, 1), 4_872u16.into());
-        answers.insert((2024, 5, 2), 5_564u16.into());
-
-        answers
-    };
-}
-
-lazy_static::lazy_static! {
-    static ref SOLVERS: BTreeMap<(u16, u8, u8), SolverFunc> = {
-        let mut solvers = BTreeMap::new();
-
-        solvers.insert((2024, 5, 1), crate::y2024::d5::p1 as SolverFunc);
-        solvers.insert((2024, 5, 2), crate::y2024::d5::p2 as SolverFunc);
-
-        solvers
-    };
-}
+static SOLVERS: LazyLock<BTreeMap<(u16, u8, u8), SolverFunc>> = LazyLock::new(|| {
+    BTreeMap::from([
+        ((2024, 5, 1), crate::y2024::d5::p1 as SolverFunc),
+        ((2024, 5, 2), crate::y2024::d5::p2 as SolverFunc),
+    ])
+});
 
 pub(crate) fn get_input(id: Id) -> anyhow::Result<&'static str> {
     INPUTS
