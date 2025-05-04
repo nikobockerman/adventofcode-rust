@@ -1,7 +1,8 @@
 {
   "name": "Rust",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    "cacheFrom": "ghcr.io/nikobockerman/adventofcode-rust-devcontainer:cache"
   },
   "customizations": {
     "vscode": {
