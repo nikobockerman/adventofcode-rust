@@ -1,1 +1,1 @@
-FROM mcr.microsoft.com/devcontainers/rust:1-1-bookworm@sha256:53f2c5cb6bc19beb8e3c0676026bea3adcdccaa0514f475a0581ea264b66b620
+FROM mcr.microsoft.com/devcontainers/rust:1-1-bookworm@sha256:5ede88aef9e23d7487559a0d63c4e01f2917e236d3a20c4505a920bc28e133cc
