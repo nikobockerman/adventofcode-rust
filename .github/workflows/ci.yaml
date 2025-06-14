@@ -21,14 +21,3 @@ jobs:
     uses: ./.github/workflows/check-rustfmt.yaml
   check-yarn:
     uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
-
-  prebuild-devcontainer:
-    uses: nikobockerman/github-workflows/.github/workflows/devcontainer-cache.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
-    permissions:
-      contents: read
-      packages: write
-    with:
-      cache-type: intermediate
-  check-devcontainer:
-    needs: prebuild-devcontainer
-    uses: ./.github/workflows/check-devcontainer.yaml
