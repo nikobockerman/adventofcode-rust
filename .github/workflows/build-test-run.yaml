@@ -1,13 +1,5 @@
 name: Build, test and run
 on:
-  pull_request:
-    paths:
-      - "**.rs"
-      - ".github/workflows/build-test-run.yaml"
-      - "Cargo.lock"
-      - "Cargo.toml"
-      - "rust-toolchain.toml"
-      - "src/**/input-*.txt"
   workflow_call:
   workflow_dispatch:
 permissions:

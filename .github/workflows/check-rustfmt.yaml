@@ -1,11 +1,5 @@
 name: Check - rustfmt
 on:
-  pull_request:
-    paths:
-      - "**.rs"
-      - ".github/workflows/check-rustfmt.yaml"
-      - "Cargo.toml"
-      - "rust-toolchain.toml"
   workflow_call:
   workflow_dispatch:
 permissions:

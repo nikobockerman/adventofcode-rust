@@ -1,9 +1,12 @@
 name: CI
 on:
   pull_request:
-    paths:
-      - ".github/workflows/ci.yaml"
-  workflow_call:
+  push:
+    branches:
+      - main
+  schedule:
+    # Run every Monday at 00:30 UTC
+    - cron: "30 0 * * 1"
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,13 +25,17 @@ jobs:
   check-yarn:
     uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
 
-  prebuild-devcontainer:
-    uses: nikobockerman/github-workflows/.github/workflows/devcontainer-cache.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
-    permissions:
-      contents: read
-      packages: write
-    with:
-      cache-type: intermediate
-  check-devcontainer:
-    needs: prebuild-devcontainer
-    uses: ./.github/workflows/check-devcontainer.yaml
+  check:
+    needs:
+      - build-test-run
+      - check-github-actions
+      - check-prettier
+      - check-renovate-config
+      - check-rustfmt
+      - check-yarn
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
