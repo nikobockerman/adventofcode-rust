@@ -14,8 +14,6 @@ permissions:
 jobs:
   build-test-run:
     uses: ./.github/workflows/build-test-run.yaml
-  check-github-actions:
-    uses: nikobockerman/github-workflows/.github/workflows/check-github-actions.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
   check-prettier:
     uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
   check-renovate-config:
@@ -28,7 +26,6 @@ jobs:
   check:
     needs:
       - build-test-run
-      - check-github-actions
       - check-prettier
       - check-renovate-config
       - check-rustfmt
