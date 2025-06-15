@@ -12,14 +12,26 @@ permissions:
   contents: read
 
 jobs:
+  mise-cache:
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
   build-test-run:
+    needs: mise-cache
     uses: ./.github/workflows/build-test-run.yaml
   check-prettier:
-    uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    needs: mise-cache
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    with:
+      task: check:prettier
   check-renovate-config:
-    uses: nikobockerman/github-workflows/.github/workflows/check-renovate-config.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    needs: mise-cache
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    with:
+      task: check:renovateconfig
   check-rustfmt:
-    uses: ./.github/workflows/check-rustfmt.yaml
+    needs: mise-cache
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    with:
+      task: check:rustfmt
   check-yarn:
     uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
 
