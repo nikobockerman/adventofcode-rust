@@ -32,8 +32,6 @@ jobs:
     uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
     with:
       task: check:rustfmt
-  check-yarn:
-    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
 
   check:
     needs:
@@ -41,7 +39,6 @@ jobs:
       - check-prettier
       - check-renovate-config
       - check-rustfmt
-      - check-yarn
     if: always()
     runs-on: ubuntu-latest
     steps:
