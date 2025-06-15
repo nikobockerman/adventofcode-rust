@@ -12,24 +12,15 @@ permissions:
   contents: read
 
 jobs:
+  mise-cache:
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
   build-test-run:
+    needs: mise-cache
     uses: ./.github/workflows/build-test-run.yaml
-  check-prettier:
-    uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
-  check-renovate-config:
-    uses: nikobockerman/github-workflows/.github/workflows/check-renovate-config.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
-  check-rustfmt:
-    uses: ./.github/workflows/check-rustfmt.yaml
-  check-yarn:
-    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
 
   check:
     needs:
       - build-test-run
-      - check-prettier
-      - check-renovate-config
-      - check-rustfmt
-      - check-yarn
     if: always()
     runs-on: ubuntu-latest
     steps:
