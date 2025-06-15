@@ -17,8 +17,12 @@ tools."npm:renovate" = "latest"
 
 [tasks.fix]
 depends = [
-    "fix:prettier"
+    "fix:prettier",
+    "fix:rustfmt"
 ]
+
+[tasks."fix:rustfmt"]
+run = "cargo fmt"
 
 [tasks."fix:prettier"]
 run = "prettier --write --cache-location .prettiercache ."
