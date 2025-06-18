@@ -15,13 +15,13 @@ jobs:
   build-test-run:
     uses: ./.github/workflows/build-test-run.yaml
   check-prettier:
-    uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
   check-renovate-config:
-    uses: nikobockerman/github-workflows/.github/workflows/check-renovate-config.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    uses: nikobockerman/github-workflows/.github/workflows/check-renovate-config.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
   check-rustfmt:
     uses: ./.github/workflows/check-rustfmt.yaml
   check-yarn:
-    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@1d0ee1b00422598a785e5620925ce2ec0de2b6d3
+    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
 
   check:
     needs:
