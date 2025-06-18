@@ -12,16 +12,39 @@ permissions:
   contents: read
 
 jobs:
+  mise-cache-ubuntu:
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      runner: ubuntu-latest
+  mise-cache-macos:
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      runner: macos-latest
+  mise-cache-windows:
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      runner: windows-latest
   build-test-run:
+    needs:
+      - mise-cache-ubuntu
+      - mise-cache-macos
+      - mise-cache-windows
     uses: ./.github/workflows/build-test-run.yaml
   check-prettier:
-    uses: nikobockerman/github-workflows/.github/workflows/check-prettier.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    needs: mise-cache-ubuntu
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      task: check:prettier
   check-renovate-config:
-    uses: nikobockerman/github-workflows/.github/workflows/check-renovate-config.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    needs: mise-cache-ubuntu
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      task: check:renovateconfig
   check-rustfmt:
-    uses: ./.github/workflows/check-rustfmt.yaml
-  check-yarn:
-    uses: nikobockerman/github-workflows/.github/workflows/check-yarn.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    needs: mise-cache-ubuntu
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@cefbbbefc1216ea1d0a822149b313c725c5f820b
+    with:
+      task: check:rustfmt
 
   check:
     needs:
@@ -29,7 +52,6 @@ jobs:
       - check-prettier
       - check-renovate-config
       - check-rustfmt
-      - check-yarn
     if: always()
     runs-on: ubuntu-latest
     steps:
