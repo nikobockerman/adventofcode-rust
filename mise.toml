@@ -30,4 +30,4 @@ run = "prettier --write --cache-location .prettiercache ."
 [tools]
 node = "22"
 "npm:prettier" = "3.6.2"
-rust = { version = "1.87.0", components = "clippy,rustfmt" }
+rust = { version = "1.88.0", components = "clippy,rustfmt" }
