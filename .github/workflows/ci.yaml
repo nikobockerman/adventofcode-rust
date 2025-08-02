@@ -13,15 +13,15 @@ permissions:
 
 jobs:
   mise-cache-ubuntu:
-    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       runner: ubuntu-latest
   mise-cache-macos:
-    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       runner: macos-latest
   mise-cache-windows:
-    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-prepare-cache.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       runner: windows-latest
   build-test-run:
@@ -32,17 +32,17 @@ jobs:
     uses: ./.github/workflows/build-test-run.yaml
   check-prettier:
     needs: mise-cache-ubuntu
-    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       task: check:prettier
   check-renovate-config:
     needs: mise-cache-ubuntu
-    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       task: check:renovateconfig
   check-rustfmt:
     needs: mise-cache-ubuntu
-    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@59b2d100d7654de4ce5e1478598bcdd2d874c88e # v1.0.9
+    uses: nikobockerman/github-workflows/.github/workflows/mise-task.yaml@17c86b9cb2f805e215e9e0f6a8e79b57257dda41 # v1.0.12
     with:
       task: check:rustfmt
 
