@@ -39,7 +39,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Setup tools through mise
-        uses: nikobockerman/github-actions/.github/actions/mise-project-setup@d0eee8223c4ff7c60c2ec2e61457b3ee867dffed # v1.0.14
+        uses: nikobockerman/github-actions/.github/actions/mise-project-setup@f90079e16690de90493fc85b25c3bf12975f9405 # v1.0.16
       - name: Setup rust cache
         uses: Swatinem/rust-cache@98c8021b550208e191a6a3145459bfc9fb29c4c0 # v2.8.0
         with:
